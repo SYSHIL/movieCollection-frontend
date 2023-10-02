@@ -69,15 +69,20 @@ const CreateMovie = () => {
             className='border border-gray-400 rounded px-4 py-2 w-full'
           />
         </div>
-        <div className='my-4'>
-          <label className='text-lg text-gray-700'>Rating out of 10:</label>
-          <input
-            type='number'
-            value={rating}
-            onChange={(e) => setRating(e.target.value)}
-            className='border border-gray-400 rounded px-4 py-2 w-full'
-          />
-        </div>
+      <div className='my-4'>
+      <label className='text-lg text-gray-700'>Rating out of 10:</label>
+      <input
+        type='number'
+        value={rating}
+        onChange={(e) => {
+          const inputValue = e.target.value;
+          if (inputValue === '' || (parseFloat(inputValue) >= 0 && parseFloat(inputValue) <= 10)) {
+            setRating(inputValue); // Convert input value to string before setting
+          }
+        }}
+        className='border border-gray-400 rounded px-4 py-2 w-full'
+        />
+      </div>
         <button
           className='px-4 py-2 bg-sky-400 text-white rounded hover:bg-sky-500 transition'
           onClick={handleSaveMovie}

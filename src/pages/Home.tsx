@@ -1,11 +1,12 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Spinner from '../components/Spinner';
 import { Link } from 'react-router-dom';
 import { MdOutlineAddBox } from 'react-icons/md';
-import {BsInfoCircle} from 'react-icons/bs'
-import {AiOutlineEdit} from 'react-icons/ai'
-import './Home.css'; // Use './' to specify the current directory
+import { BsInfoCircle } from 'react-icons/bs';
+import { AiOutlineEdit } from 'react-icons/ai';
+import './Home.css';
+
 // Define the type for a movie object
 interface Movie {
   _id: string;
@@ -15,10 +16,10 @@ interface Movie {
   rating: number;
 }
 
-
 const Home = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [loading, setLoading] = useState(false);
+  const [sortBy, setSortBy] = useState('rating'); // Default sorting by rating
 
   useEffect(() => {
     setLoading(true);
@@ -27,18 +28,31 @@ const Home = () => {
       .then((response) => {
         setMovies(response.data.movies);
         setLoading(false);
-        console.log(response.data)
       })
-      .catch((error)=>{
-        console.error('Error fetching data:',error)
-        setLoading(false)
-      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+        setLoading(false);
+      });
   }, []);
+
+  // Function to handle sorting based on the selected option
+  const handleSort = (option: string) => {
+    const sortedMovies = [...movies];
+    if (option === 'rating') {
+      sortedMovies.sort((a, b) => b.rating - a.rating);
+    } else if (option === 'title') {
+      sortedMovies.sort((a, b) => a.title.localeCompare(b.title));
+    } else if (option === 'releaseYear') {
+      sortedMovies.sort((a, b) => a.publishYear - b.publishYear);
+    }
+    setMovies(sortedMovies);
+    setSortBy(option);
+  };
 
   return (
     <div className='p-4 background-image'>
       <div className='text-center mb-8'>
-      <h1 className='text-4xl font-bold'>Welcome to Rotten tomatoes!</h1>
+        <h1 className='text-4xl font-bold'>Welcome to Rotten tomatoes!</h1>
       </div>
       <div className='flex justify-between items-center'>
         <h1 className='text-3xl my-8'>Catalogue</h1>
@@ -46,6 +60,18 @@ const Home = () => {
           <h1>Post movie review </h1>
           <MdOutlineAddBox className='text-sky-800 text-4xl' />
         </Link>
+      </div>
+      <div className="my-4">
+        <label htmlFor="sortDropdown" className="mr-2">Sort By:</label>
+        <select
+          id="sortDropdown"
+          value={sortBy}
+          onChange={(e) => handleSort(e.target.value)}
+        >
+          <option value="rating">Rating</option>
+          <option value="title">Title</option>
+          <option value="releaseYear">Release Year</option>
+        </select>
       </div>
       {loading ? (
         <Spinner />
@@ -66,7 +92,7 @@ const Home = () => {
                 Release Year
               </th>
               <th className='border border-slate-600 rounded-md '>
-                Rating out of 10
+                Rating out of 5
               </th>
               <th className='border border-slate-600 rounded-md'>
                 Actions
@@ -90,7 +116,9 @@ const Home = () => {
                   {movie.publishYear}
                 </td>
                 <td className='border border-slate-700 rounded-md text-center'>
-                  {movie.rating}
+                  {Array.from({ length: movie.rating }, (_, index) => (
+                    <span key={index} className='text-yellow-400'>&#9733;</span>
+                  ))}
                 </td>
                 <td className='border border-slate-700 rounded-md text-center'>
                   <div className="flex justify-center gap-x-4">

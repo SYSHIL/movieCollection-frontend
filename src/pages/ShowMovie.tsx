@@ -33,7 +33,7 @@ const ShowMovie = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`https://movie-collection-backend-bl3t-iv0bq1c5j-syshils-projects.vercel.app/${id}`)
+      .get(`https://movie-collection-backend-bl3t-iv0bq1c5j-syshils-projects.vercel.app/movie/${id}`)
       .then((response) => {
         setMovie(response.data);
         setLoading(false);
@@ -53,10 +53,6 @@ const ShowMovie = () => {
       ) : (
         <div className='flex flex-col border-2 border-sky-400 rounded-xl w-fit p-4'>
           <div className='my-4'>
-            <span className='text-xl mr-4 text-gray-500'>Id</span>
-            <span>{movie._id}</span>
-          </div>
-          <div className='my-4'>
             <span className='text-xl mr-4 text-gray-500'>Title</span>
             <span>{movie.title}</span>
           </div>
@@ -69,8 +65,10 @@ const ShowMovie = () => {
             <span>{movie.publishYear}</span>
           </div>
           <div className='my-4'>
-            <span className='text-xl mr-4 text-gray-500'>Publish Year</span>
-            <span>{movie.rating}</span>
+            <span className='text-xl mr-4 text-gray-500'>Rating</span>
+            {Array.from({ length: movie.rating }, (_, index) => (
+              <span key={index} className='text-yellow-400'>&#9733;</span>
+            ))}
           </div>
           {/* <div className='my-4'>
             <span className='text-xl mr-4 text-gray-500'>Create Time</span>

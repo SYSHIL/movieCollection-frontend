@@ -4,12 +4,13 @@ import Spinner from '../components/Spinner';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
+import StarRatingInput from "../components/StarRatingInput"
 
 const CreateMovie = () => {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [publishYear, setPublishYear] = useState('');
-  const [rating, setRating] = useState('');
+  const [rating, setRating] = useState(0);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
@@ -69,20 +70,13 @@ const CreateMovie = () => {
             className='border border-gray-400 rounded px-4 py-2 w-full'
           />
         </div>
-      <div className='my-4'>
-      <label className='text-lg text-gray-700'>Rating out of 10:</label>
-      <input
-        type='number'
-        value={rating}
-        onChange={(e) => {
-          const inputValue = e.target.value;
-          if (inputValue === '' || (parseFloat(inputValue) >= 0 && parseFloat(inputValue) <= 10)) {
-            setRating(inputValue); // Convert input value to string before setting
-          }
-        }}
-        className='border border-gray-400 rounded px-4 py-2 w-full'
-        />
-      </div>
+        <div className='my-4'>
+          <label className='text-lg text-gray-700'>Rating out of 5:</label>
+          <StarRatingInput
+            value={rating}
+            onChange={(newRating: number) => setRating(newRating)}
+          />
+        </div>
         <button
           className='px-4 py-2 bg-sky-400 text-white rounded hover:bg-sky-500 transition'
           onClick={handleSaveMovie}

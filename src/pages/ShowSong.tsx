@@ -3,39 +3,41 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import BackButton from '../components/BackButton';
 import Spinner from '../components/Spinner';
-
-// Define the type for a movie object
-interface Movie {
+import { BiUserCircle } from 'react-icons/bi';
+// Define the type for a song object
+interface Song {
   _id: string;
   title: string;
   author: string;
-  publishYear: number;
   rating: number;
+  subscribers : number;
+  url : string;
 }
 
-const defaultMovie: Movie = {
+const defaultSong: Song = {
   _id: '',
   title: '',
   author: '',
-  publishYear: 0,
-  rating: 0 
+  rating: 0,
+  subscribers : 0,
+  url : ''
 };
 
 
 
 
 
-const ShowMovie = () => {
-  const [movie, setMovie] = useState<Movie>(defaultMovie);
+const ShowSong = () => {
+  const [song, setSong] = useState<Song>(defaultSong);
   const [loading, setLoading] = useState(false);
   const { id } = useParams();
 
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`https://movie-collection-backend-bl3t-iv0bq1c5j-syshils-projects.vercel.app/movie/${id}`)
+      .get(`https://movie-collection-backend-bl3t.vercel.app/song/${id}`)
       .then((response) => {
-        setMovie(response.data);
+        setSong(response.data);
         setLoading(false);
       })
       .catch((error) => {
@@ -47,41 +49,42 @@ const ShowMovie = () => {
   return (
     <div className='p-4'>
       <BackButton />
-      <h1 className='text-3xl my-4'>Show Movie</h1>
+      <h1 className='text-3xl my-4'>Show Song</h1>
       {loading ? (
         <Spinner />
       ) : (
         <div className='flex flex-col border-2 border-sky-400 rounded-xl w-fit p-4'>
           <div className='my-4'>
             <span className='text-xl mr-4 text-gray-500'>Title</span>
-            <span>{movie.title}</span>
+            <span>{song.title}</span>
           </div>
           <div className='my-4'>
             <span className='text-xl mr-4 text-gray-500'>Author</span>
-            <span>{movie.author}</span>
+            <span>{song.author}</span>
           </div>
-          <div className='my-4'>
-            <span className='text-xl mr-4 text-gray-500'>Publish Year</span>
-            <span>{movie.publishYear}</span>
-          </div>
+        
           <div className='my-4'>
             <span className='text-xl mr-4 text-gray-500'>Rating</span>
-            {Array.from({ length: movie.rating }, (_, index) => (
+            {Array.from({ length: song.rating }, (_, index) => (
               <span key={index} className='text-yellow-400'>&#9733;</span>
             ))}
           </div>
-          {/* <div className='my-4'>
-            <span className='text-xl mr-4 text-gray-500'>Create Time</span>
-            <span>{new Date(movie.createdAt).toString()}</span>
-          </div>
           <div className='my-4'>
-            <span className='text-xl mr-4 text-gray-500'>Last Update Time</span>
-            <span>{new Date(movie.updatedAt).toString()}</span>
-          </div> */}
+            <span className='text-xl mr-4 text-gray-500'>Subscribers</span>
+            <span>{song.subscribers}</span>
+          </div>
+          <div className='flex justify-start items-center gap-x-2'>
+            <BiUserCircle className='text-red-300 text-2xl' />
+            <a href={song.url} target="_blank" rel="noopener noreferrer" className='my-1 text-blue-500 underline'>
+                Click here to listen
+            </a>
+          </div>
+         
+    
         </div>
       )}
     </div>
   );
 };
 
-export default ShowMovie;
+export default ShowSong;

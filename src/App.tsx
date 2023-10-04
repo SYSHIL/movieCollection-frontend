@@ -1,19 +1,19 @@
 // import React from "react";
 import {Routes,Route} from 'react-router-dom'
 import Home from './pages/Home'
-import CreateMovie from './pages/CreateMovie'
-import EditMovie from './pages/EditMovie'
-import DeleteMovie from './pages/DeleteMovie'
-import ShowMovie from './pages/ShowMovie'
+import CreateSong from './pages/CreateSong'
+import EditSong from './pages/EditSong'
+import DeleteSong from './pages/DeleteSong'
+import ShowSong from './pages/ShowSong'
 
 const App = () => {
   return (
     <Routes>
       <Route path='/' element={<Home/>}/>
-      <Route path='/movies/create' element={<CreateMovie/>}/>
-      <Route path='/movies/details/:id' element={<ShowMovie/>}/>
-      <Route path='/movies/edit/:id' element={<EditMovie/>}/>
-      <Route path='/movies/delete/:id' element={<DeleteMovie/>}/>
+      <Route path='/songs/create' element={<CreateSong/>}/>
+      <Route path='/songs/details/:id' element={<ShowSong/>}/>
+      <Route path='/songs/edit/:id' element={<EditSong/>}/>
+      <Route path='/songs/delete/:id' element={<DeleteSong/>}/>
     </Routes>
   )
 }

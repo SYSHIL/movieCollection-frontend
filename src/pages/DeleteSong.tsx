@@ -14,7 +14,7 @@ const DeleteMovie = () => {
   const handleDeleteMovie = () => {
     setLoading(true);
     axios
-      .delete(`https://movie-collection-backend-bl3t-iv0bq1c5j-syshils-projects.vercel.app/movie/delete/${id}`)
+      .delete(`https://movie-collection-backend-bl3t.vercel.app/song/delete/${id}`)
       .then(() => {
         setLoading(false);
         enqueueSnackbar('Movie Deleted successfully', { variant: 'success' });
@@ -31,10 +31,10 @@ const DeleteMovie = () => {
   return (
     <div className='p-4'>
       <BackButton />
-      <h1 className='text-3xl my-4'>Delete Movie</h1>
+      <h1 className='text-3xl my-4'>Delete Song</h1>
       {loading ? <Spinner /> : ''}
       <div className='flex flex-col items-center border-2 border-sky-400 rounded-xl w-[600px] p-8 mx-auto'>
-        <h3 className='text-2xl'>Are You Sure You want to delete this movie?</h3>
+        <h3 className='text-2xl'>Are You Sure You want to delete this song?</h3>
 
         <button
           className='p-4 bg-red-600 text-white m-8 w-full'

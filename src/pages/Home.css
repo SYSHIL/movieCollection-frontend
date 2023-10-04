@@ -1,4 +1,4 @@
-.background-image {
-    background-color: azure;
+body{
+    min-height: 100%;
+    background-color: rgb(183, 214, 241);
 }
-  

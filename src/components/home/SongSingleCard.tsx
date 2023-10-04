@@ -6,8 +6,16 @@ import { MdOutlineDelete } from 'react-icons/md';
 import { useState } from 'react';
 import { PiBookOpenTextLight } from 'react-icons/pi';
 import SongModal from './SongModal';
-
-const SongSingleCard = ({ song }) => {
+interface Song {
+    _id: string;
+    title: string;
+    author: string;
+    subscribers: number;
+    url: string;
+    // Add other properties if needed
+  }
+  
+const SongSingleCard: React.FC<{ song: Song }> = ({ song }) => {
   const [showModal, setShowModal] = useState(false);
 
   return (

@@ -1,8 +1,16 @@
 import { AiOutlineClose } from 'react-icons/ai';
 import { PiBookOpenTextLight } from 'react-icons/pi';
 import { BiUserCircle } from 'react-icons/bi';
-
-const SongModal = ({ song, onClose }) => {
+interface Song {
+    _id: string;
+    title: string;
+    author: string;
+    subscribers: number;
+    url: string;
+    // Add other properties if needed
+}
+  
+const SongModal: React.FC<{ song: Song; onClose: () => void }> = ({ song, onClose }) => {
   return (
     <div
       className='fixed bg-black bg-opacity-60 top-0 left-0 right-0 bottom-0 z-50 flex justify-center items-center'
